@@ -20,9 +20,7 @@ import {
 } from 'firebase/firestore';
 
 export const useStore = defineStore('main', {
-  // other options...
   state: () => ({
-    // all these properties will have their type inferred automatically
     page: 'voting',
     user: null,
     question: null,
@@ -51,10 +49,6 @@ export const useStore = defineStore('main', {
       this.user = user;
     },
     async updateQuestion() {
-      // gets the latest one question of the day for the user
-      // if the user has already voted, it will get the next question
-      // this function is for later
-
       const db = getFirestore(getApp());
       const questionRef = doc(db, 'question', this.questionId);
       const questionDoc = await getDoc(questionRef);
@@ -74,7 +68,6 @@ export const useStore = defineStore('main', {
       }
     },
     async signUp(email, password) {
-      
       const db = getFirestore(getApp());
       const auth = getAuth();
       createUserWithEmailAndPassword(auth, email, password)
@@ -88,7 +81,6 @@ export const useStore = defineStore('main', {
           });
           this.updatePage('voting');
         })
-      // TODO: setuser info on the users collection
     },
     signIn(email, password) {
       const auth = getAuth();
@@ -98,7 +90,6 @@ export const useStore = defineStore('main', {
           console.log('test in then');
           this.updatePage('voting');
         })
-      // TODO: setuser info on the users collection
     },
     async signOut() {
       const auth = getAuth();
@@ -109,7 +100,7 @@ export const useStore = defineStore('main', {
     async setCanVote() {
       // checks if the user has already voted
       // if they have, it will the canVote property to false
-      // if they dont haven't, it will set the canVote property to true
+      // if they haven't voted, it will set the canVote property to true
       const db = getFirestore(getApp());
       const userVoteQuery = query(
         collection(db, `question/${this.questionId}/user_votes`),

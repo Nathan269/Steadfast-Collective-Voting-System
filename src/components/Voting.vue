@@ -12,7 +12,6 @@ const vote = (id) => {
   store.setVote(id);
 };
 
-//init page
 store.setCanVote();
 store.updateQuestion();
 </script>
